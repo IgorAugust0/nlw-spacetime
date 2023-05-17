@@ -1,8 +1,8 @@
 // TSX é uma extensão do JSX, que é uma extensão do JS que permite escrever HTML dentro do JS
 export default function Home() {
   return (
-    <div className="m-10 h-20 w-20 rounded bg-red-500 text-2xl font-bold uppercase">
-      oi
+    <div className="h-screen bg-zinc-950 p-6 text-zinc-50">
+      <h1 className="text-4xl font-bold">Sua cápsula do tempo</h1>
     </div>
   )
 }
