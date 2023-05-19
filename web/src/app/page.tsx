@@ -1,5 +1,7 @@
 // TSX é uma extensão do JSX, que é uma extensão do JS que permite escrever HTML dentro do JS
-import { User } from 'lucide-react'
+import { User } from 'lucide-react' // Importa os ícones do Lucide
+import Image from 'next/image' // Importa o componente Image do Next.js e o coloca na PROPRIEDADE (Props) Image
+import nlwLogo from '../assets/nlw-spacetime-logo.svg' // Importa o logo do NLW e o coloca na variável nlwLogo
 
 export default function Home() {
   return (
@@ -20,6 +22,26 @@ export default function Home() {
             memórias!
           </p>
         </a>
+
+        {/* Hero */}
+        <div className="space-y-5">
+          <Image src={nlwLogo} alt="NLW Spacetime" />
+          <div className="max-w-[420px] space-y-1">
+            <h1 className="text-5xl font-bold leading-tight text-gray-50">
+              Sua cápsula do tempo
+            </h1>
+            <p className="text-lg leading-relaxed">
+              Colecione momentos marcantes da sua jornada e compartilhe (se
+              quiser) com o mundo!
+            </p>
+          </div>
+          <a
+            className="inline-block rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
+            href=""
+          >
+            cadastrar lembrança
+          </a>
+        </div>
       </div>
 
       {/* Right */}
