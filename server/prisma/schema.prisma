@@ -10,18 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model User {
+  id        Int      @id @default(autoincrement())
+  githubId  Int      @unique
+  name      String
+  login     String
+  avatarUrl String
+  Memory    Memory[]
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model Memory {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  coverUrl  String
+  content   String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
