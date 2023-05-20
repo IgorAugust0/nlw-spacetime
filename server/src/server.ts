@@ -1,16 +1,12 @@
 import fastify from 'fastify'
-import { PrismaClient } from '@prisma/client'
+import { memoriesRouteHandler } from './routes/memories'
 
+// fastify instance
 const app = fastify()
-const prisma = new PrismaClient() // conexão com o banco
+// fastify method to register a seoarate route file/handler
+app.register(memoriesRouteHandler)
 
-// rota
-app.get('/users', async () => {
-  const users = await prisma.user.findMany()
-
-  return users
-})
-
+// fastify method to start the server on a specific port
 app
   .listen({
     port: 3333,
