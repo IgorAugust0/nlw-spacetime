@@ -1,8 +1,12 @@
 import fastify from 'fastify'
+import cors from '@fastify/cors'
 import { memoriesRouteHandler } from './routes/memories'
 
 // fastify instance
 const app = fastify()
+app.register(cors, {
+  origin: true,
+})
 // fastify method to register a seoarate route file/handler
 app.register(memoriesRouteHandler)
 
