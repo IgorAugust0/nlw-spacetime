@@ -42,7 +42,7 @@ export async function authRoutesHandler(app: FastifyInstance) {
     const userSchema = z.object({
       id: z.number(),
       login: z.string(),
-      name: z.string(),
+      name: z.string(), // name: z.string().nullable() or z.nullable(z.string()) to allow null values
       avatar_url: z.string().url(),
     })
 
