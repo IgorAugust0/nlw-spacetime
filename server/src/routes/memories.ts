@@ -4,8 +4,15 @@ import { z } from 'zod'
 
 // Route: GET: /memories   // parameters in TS must have a type defined
 export async function memoriesRouteHandler(app: FastifyInstance) {
-  app.get('/memories', async () => {
+  app.get('/memories', async (request) => {
+    await request.jwtVerify() // await the jwtVerify() method to verify the JWT token
+
+    console.log(request.user.sub) // log the user object to the console
+
     const memories = await prisma.memory.findMany({
+      where: {
+        userId: request.user.sub, // get memories for the user that is logged in
+      },
       orderBy: {
         createdAt: 'asc', // sort by createdAt in ascending order
       },
@@ -29,15 +36,14 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
   app.get('/memories/:id', async (request) => {
     // validate the request parameters
     const paramsSchema = z.object({
-      // id: z.string().uuid(),
-      // coerce the id to a number and then coerce it to an integer with constrained input
-      id: z.number().or(z.string()).pipe(z.coerce.number()),
+      // id: z.number().or(z.string()).pipe(z.coerce.number()): coerce the id to a number and then coerce it to an integer with constrained input
+      id: z.string().uuid(),
     })
     // get the id from the request parameters
     const { id } = paramsSchema.parse(request.params)
 
-    // if the id is not a valid uuid, throw an error
-    const memory = await prisma.memory.findFirstOrThrow({
+    // if the id is not a valid/unique uuid, throw an error
+    const memory = await prisma.memory.findUniqueOrThrow({
       where: {
         id,
       },
@@ -62,7 +68,7 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
         content,
         coverUrl,
         isPublic,
-        userId: 1,
+        userId: '51bd7152-a1f2-4f5f-a76e-6f63d0bda107',
       },
     })
 
@@ -70,7 +76,8 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
   })
   app.put('/memories/:id', async (request) => {
     const paramsSchema = z.object({
-      id: z.number().or(z.string()).pipe(z.coerce.number()),
+      // id: z.number().or(z.string()).pipe(z.coerce.number())
+      id: z.string().uuid(),
     })
 
     const { id } = paramsSchema.parse(request.params)
@@ -102,10 +109,10 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
 
   app.delete('/memories/:id', async (request) => {
     const paramsSchema = z.object({
-      id: z.number().or(z.string()).pipe(z.coerce.number()),
+      // z.number().or(z.string()).pipe(z.coerce.number())
+      id: z.string().uuid(),
     })
     const { id } = paramsSchema.parse(request.params)
-
     await prisma.memory.delete({
       where: {
         id,
