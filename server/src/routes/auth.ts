@@ -68,8 +68,20 @@ export async function authRoutesHandler(app: FastifyInstance) {
       })
     }
 
+    // Generate a JWT token for the user
+    const token = app.jwt.sign(
+      {
+        name: user.name,
+        avatarUrl: user.avatarUrl,
+      },
+      {
+        sub: user.id.toString(),
+        expiresIn: '30d',
+      },
+    )
+
     return {
-      user,
+      token,
     }
   })
 }
