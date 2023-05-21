@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import axios from 'axios'
 import { z } from 'zod'
+import { prisma } from '../lib/prisma'
 
 export async function authRoutesHandler(app: FastifyInstance) {
   app.post('/register', async (request) => {
@@ -8,10 +9,12 @@ export async function authRoutesHandler(app: FastifyInstance) {
       code: z.string(),
     })
 
+    // Parse the request body using the schema above and get the code from it
     const { code } = bodySchema.parse(request.body)
 
-    const acessTokenResponse = await axios.post(
-      'https://github.com/login/oauth/acess_token',
+    // Get access token from GitHub API using the code from the request body and the client ID and secret from the environment variables
+    const accessTokenResponse = await axios.post(
+      'https://github.com/login/oauth/access_token',
       null,
       {
         params: {
@@ -25,15 +28,45 @@ export async function authRoutesHandler(app: FastifyInstance) {
       },
     )
 
-    const { acess_token } = acessTokenResponse.data
+    // Schema for the access token object returned by the GitHub API
+    const { access_token } = accessTokenResponse.data
 
+    // Get user info from GitHub API using the access token from the previous step
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
-        Authorization: `Bearer ${acess_token}`,
+        Authorization: `Bearer ${access_token}`,
       },
     })
 
-    const user = userResponse.data
+    // Schema for the user object returned by the GitHub API
+    const userSchema = z.object({
+      id: z.number(),
+      login: z.string(),
+      name: z.string(),
+      avatar_url: z.string().url(),
+    })
+
+    // Parse the user object returned by the GitHub API using the schema above
+    const userInfo = userSchema.parse(userResponse.data)
+
+    // Check if user already exists in the database using the GitHub ID
+    let user = await prisma.user.findUnique({
+      where: {
+        githubId: userInfo.id,
+      },
+    })
+
+    // If user doesn't exist, create it in the database
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          githubId: userInfo.id,
+          login: userInfo.login,
+          name: userInfo.name,
+          avatarUrl: userInfo.avatar_url,
+        },
+      })
+    }
 
     return {
       user,
