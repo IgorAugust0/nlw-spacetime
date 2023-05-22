@@ -12,8 +12,18 @@ import blurBg from './src/assets/bg-blur.png'
 import Stripes from './src/assets/stripes.svg' // component created from a svg file
 import NLWLogo from './src/assets/nlw-spacetime-logo.svg' // ""
 import { styled } from 'nativewind'
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
+import { useEffect } from 'react'
 
 const StyledStripes = styled(Stripes) // so we can style the svg component with tailwind (nativewind)
+
+// const discovery for github auth session (expo-auth-session)
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint:
+    'https://github.com/settings/connections/applications/bd86bd2138d33386292b',
+}
 
 export default function App() {
   const [hasLoadedFonts] = useFonts({
@@ -21,6 +31,33 @@ export default function App() {
     Roboto_700Bold,
     BaiJamjuree_700Bold,
   })
+
+  const [request, response, signInWithGithub] = useAuthRequest(
+    {
+      clientId: 'bd86bd2138d33386292b',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'nlwspacetime',
+      }),
+    },
+    discovery,
+  )
+
+  // function to monitor the change of value of response, in this case, everytime response changes,
+  // it will check if the type is success and if it is, it will get the code from the params
+  useEffect(() => {
+    // console.log(
+    //   makeRedirectUri({
+    //     scheme: 'nlwspacetime',
+    //   }),
+    // )
+    // console.log(response)
+    if (response?.type === 'success') {
+      const { code } = response.params
+
+      console.log(code)
+    }
+  }, [response])
 
   if (!hasLoadedFonts) {
     return null
@@ -53,6 +90,7 @@ export default function App() {
         <TouchableOpacity
           activeOpacity={0.7}
           className="rounded-full bg-green-500 px-5 py-2"
+          onPress={() => signInWithGithub()} // anonymous function to call the signInWithGithub function when the button is pressed
         >
           <Text className="font-alt text-sm uppercase text-black">
             cadastrar lembrança
