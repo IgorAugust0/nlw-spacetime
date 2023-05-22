@@ -14,9 +14,12 @@ export async function GET(request: NextRequest) {
   // redirect to the home (root) page and set the token in a cookie
   const redirectURL = new URL('/', request.url)
 
+  // in seconds
+  const cookieExpiration = 60 * 60 * 24 * 30 // 30 days
+
   return NextResponse.redirect(redirectURL, {
     headers: {
-      'Set-Cookie': `token=${token}; Path=/;`,
+      'Set-Cookie': `token=${token}; Path=/; max-age=${cookieExpiration};`,
     },
   })
 }
