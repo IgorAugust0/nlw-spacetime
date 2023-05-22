@@ -14,6 +14,7 @@ import NLWLogo from './src/assets/nlw-spacetime-logo.svg' // ""
 import { styled } from 'nativewind'
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import { useEffect } from 'react'
+import { api } from './src/lib/api'
 
 const StyledStripes = styled(Stripes) // so we can style the svg component with tailwind (nativewind)
 
@@ -55,7 +56,16 @@ export default function App() {
     if (response?.type === 'success') {
       const { code } = response.params
 
-      console.log(code)
+      // console.log(code)
+      api
+        .post('/register', {
+          code,
+        })
+        .then((response) => {
+          const { token } = response.data
+
+          console.log(token)
+        })
     }
   }, [response])
 
