@@ -50,18 +50,19 @@ export default function App() {
             quiser) com o mundo!
           </Text>
         </View>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          className="rounded-full bg-green-500 px-5 py-2"
+        >
+          <Text className="font-alt text-sm uppercase text-black">
+            cadastrar lembrança
+          </Text>
+        </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        activeOpacity={0.7}
-        className="rounded-full bg-green-500 px-5 py-2"
-      >
-        <Text className="font-alt text-sm uppercase text-black">
-          cadastrar lembrança
-        </Text>
-      </TouchableOpacity>
-
-      <Text className="text-cente font-body text-sm leading-relaxed"></Text>
+      <Text className="text-center font-body text-sm leading-relaxed text-gray-200">
+        Feito com 💜 no NLW da Rocketseat
+      </Text>
 
       <StatusBar style="light" translucent />
     </ImageBackground>
