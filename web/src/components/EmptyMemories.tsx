@@ -4,7 +4,7 @@ export function EmptyMemories() {
       {/* leading-relaxed = line-height: 1.625; w-[360px] = width: 360px; */}
       <p className="w-[360px] text-center leading-relaxed">
         Você ainda não registrou nenhuma lembrança, comece a{' '}
-        <a href="" className="underline hover:text-gray-50">
+        <a href="" className="underline transition-colors hover:text-gray-50">
           criar agora
         </a>
         !
