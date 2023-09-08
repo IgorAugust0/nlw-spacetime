@@ -19,7 +19,7 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
       },
     })
 
-    // map memories to a new array of objects with only the properties we want
+    // map memories to a new array of objectsN with only the properties we want
     return memories.map((memory) => {
       let excerpt = memory.content
       if (excerpt.length > 120) {
