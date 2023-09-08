@@ -5,6 +5,8 @@
 // The client-side middleware is used to intercept requests and responses on the client-side,
 // while the server-side middleware is used to intercept requests and responses on the server-side.
 
+// Next is also known for its backend for frontend (BFF) capabilities,
+
 import { NextRequest, NextResponse } from 'next/server'
 
 const signInUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}` // define the url to redirect to if the user is not authenticated
