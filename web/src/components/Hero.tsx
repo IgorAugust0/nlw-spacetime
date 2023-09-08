@@ -1,5 +1,6 @@
 import Image from 'next/image' // Importa o componente Image do Next.js e o coloca na PROPRIEDADE (Props) Image
 import nlwLogo from '../assets/nlw-spacetime-logo.svg' // Importa o logo do NLW e o coloca na variável nlwLogo
+import Link from 'next/link'
 
 export function Hero() {
   return (
@@ -14,12 +15,12 @@ export function Hero() {
           com o mundo!
         </p>
       </div>
-      <a
+      <Link
         className="inline-block rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
-        href=""
+        href="/memories/new"
       >
         cadastrar lembrança
-      </a>
+      </Link>
     </div>
   )
 }
