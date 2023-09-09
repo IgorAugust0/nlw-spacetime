@@ -7,12 +7,17 @@ import multipart from '@fastify/multipart'
 import { memoriesRouteHandler } from './routes/memories'
 import { authRoutesHandler } from './routes/auth'
 import { uploadRoutes } from './routes/upload'
+import { resolve } from 'node:path'
 
-// fastify instance
-const app = fastify()
+const app = fastify() // create a new fastify instance
 
-// register the multipart plugin
-app.register(multipart) // or app.register(require('fastify-multipart')
+app.register(multipart) // register the multipart plugin
+
+// register the static plugin
+app.register(require('@fastify/static'), {
+  root: resolve(__dirname, '../', 'uploads'), // concatenate the uploads directory with the file name
+  prefix: '/uploads', // prefix the URL with /uploads
+})
 
 // register the cors plugin
 app.register(cors, {
