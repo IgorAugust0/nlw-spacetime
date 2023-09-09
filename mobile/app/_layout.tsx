@@ -58,6 +58,7 @@ export default function Layout() {
       >
         {/* if the user is authenticated, redirect to the memories page */}
         <Stack.Screen name="index" redirect={isUserAuthenticated} />
+        <Stack.Screen name="new" />
         <Stack.Screen name="memories" />
       </Stack>
       {/* in screenOptions we can pass options for all the screens, the first curly bracket is for a javascript code and the second is for an object */}
