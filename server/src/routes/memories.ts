@@ -61,11 +61,13 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
   app.post('/memories', async (request) => {
     // validate the request body
     const bodySchema = z.object({
+      // content: z.string(),
       content: z
         .string()
         .min(5, { message: 'Deve ter pelo menos 5 caracteres' })
         .max(1000, { message: 'Deve ter no máximo 1000 caracteres' }),
       coverUrl: z.string().url({ message: 'Deve ser uma URL válida' }),
+      // coverUrl: z.string(),
       isPublic: z.coerce.boolean().default(false),
     })
 
