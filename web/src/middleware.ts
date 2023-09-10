@@ -27,5 +27,4 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: '/memories/:path*', // match all routes starting with /memories
-  //   matcher: /^\/api\/.*/,
 }
