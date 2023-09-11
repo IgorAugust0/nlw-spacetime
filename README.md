@@ -1,5 +1,4 @@
 <h1 align="center">
-<br>
   <a href="https://github.com/IgorAugust0/NLW-Spacetime"><img src="assets/logo.svg" alt="Markdownify" width="200"></a>
   <br>
   NLW - Spacetime
