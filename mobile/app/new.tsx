@@ -1,15 +1,19 @@
 // new memory page
 import { View, Text, Switch, TextInput, ScrollView, Image } from 'react-native'
 import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 import Icon from '@expo/vector-icons/Feather'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
+import * as SecureStore from 'expo-secure-store'
+import { api } from '../src/lib/api'
+// import sharp from 'sharp' could be used to convert the image to a jpeg format and reduce the size of the image
 
 export default function NewMemory() {
   const { bottom, top } = useSafeAreaInsets() // get the safe area insets from the device
+  const router = useRouter() // get the router from the expo router
 
   const [preview, setPreview] = useState<string | null>(null) // state to store the cover image of the memory (*)
   const [content, setContent] = useState('') // state to store the content of the memory stored in the text input
@@ -35,8 +39,52 @@ export default function NewMemory() {
     }
   }
 
-  function handleCreateMemory() {
-    console.log(content, isPublic)
+  async function handleCreateMemory() {
+    // get the token from the secure store
+    const token = await SecureStore.getItemAsync('token')
+
+    let coverUrl = ''
+
+    if (preview) {
+      const uploadFormData = new FormData() // because its an upload, it needs to be a multipart form data, not a json
+
+      // this is a problem of the typescript integrated with the react-native, it doesn't recognize the append function
+      uploadFormData.append('file', {
+        uri: preview,
+        name: 'image.jpg',
+        type: 'image/jpeg',
+      } as any)
+
+      // response from the api call to upload the image to the server
+      const uploadResponse = await api.post('/upload', uploadFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // this is a upload, so the content type is 'multipart/form-data
+          // authorization: `Bearer ${token}`,
+        },
+      })
+
+      // get the url of the uploaded image
+      coverUrl = uploadResponse.data.url
+      console.log(coverUrl)
+    }
+
+    // call the api to create a new memory with the data from the form
+    await api.post(
+      '/memories',
+      {
+        content,
+        isPublic,
+        coverUrl,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
+    // the operatior && is a short circuit operator, it checks if the first value is true, if it is, it returns the second value
+    router && router.push('/memories') // redirect the user to the memories page after creating a new memory
   }
 
   return (
@@ -91,6 +139,7 @@ export default function NewMemory() {
           multiline
           value={content}
           onChangeText={setContent} // same as {value => setContent(value)}
+          textAlignVertical="top"
           className="p-0 font-body text-lg text-gray-50"
           placeholderTextColor="#56565a"
           placeholder="Fique livre para adicionar fotos, vídeos e relatos sobre essa experiência que você quer lembrar para sempre."
