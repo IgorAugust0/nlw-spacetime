@@ -21,6 +21,7 @@ export default function Layout() {
   const [isUserAuthenticated, setIsUserAuthenticate] = useState<null | boolean>(
     null,
   ) // generic type, it can be null or boolean, starts as null
+
   const [hasLoadedFonts] = useFonts({
     Roboto_400Regular,
     Roboto_700Bold,
@@ -50,6 +51,7 @@ export default function Layout() {
       {/* change the style of the status bar to light, so it can be seen */}
       <StatusBar style="light" translucent />
       {/* the stack of pages, the first page is the index page */}
+      {/* in screenOptions we can pass options for all the screens, the first curly bracket is for a javascript code and the second is for an object */}
       <Stack
         screenOptions={{
           headerShown: false,
@@ -62,7 +64,6 @@ export default function Layout() {
         <Stack.Screen name="memories" />
         <Stack.Screen name="new" />
       </Stack>
-      {/* in screenOptions we can pass options for all the screens, the first curly bracket is for a javascript code and the second is for an object */}
     </ImageBackground>
   )
 }
