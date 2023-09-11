@@ -2,13 +2,14 @@ import { FastifyInstance } from 'fastify'
 import { prisma } from '../lib/prisma'
 import { z } from 'zod'
 
-// Route: GET: /memories   // parameters in TS must have a type defined
+// Memories route handler to create, read, update and delete memories (CRUD)
 export async function memoriesRouteHandler(app: FastifyInstance) {
   // before executing the handler of every router, verify if the user is authenticated by its JWT token
   app.addHook('preHandler', async (request) => {
     await request.jwtVerify()
   })
 
+  // get all memories
   app.get('/memories', async (request) => {
     const memories = await prisma.memory.findMany({
       where: {
@@ -30,10 +31,12 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
         id: memory.id,
         coverUrl: memory.coverUrl,
         excerpt,
+        createdAt: memory.createdAt,
       }
     })
   })
 
+  // get a single memory by its id
   app.get('/memories/:id', async (request, reply) => {
     // validate the request parameters
     const paramsSchema = z.object({
@@ -58,6 +61,7 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
     return memory
   })
 
+  // create a new memory
   app.post('/memories', async (request) => {
     // validate the request body
     const bodySchema = z.object({
@@ -85,6 +89,7 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
     return memory
   })
 
+  // update a memory by its id
   app.put('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       // id: z.number().or(z.string()).pipe(z.coerce.number())
@@ -129,6 +134,7 @@ export async function memoriesRouteHandler(app: FastifyInstance) {
     return memory
   })
 
+  // delete a memory by its id
   app.delete('/memories/:id', async (request, reply) => {
     const paramsSchema = z.object({
       // z.number().or(z.string()).pipe(z.coerce.number())

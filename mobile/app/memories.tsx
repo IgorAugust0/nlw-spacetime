@@ -8,11 +8,16 @@ import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
 import Icon from '@expo/vector-icons/Feather'
 import { useEffect, useState } from 'react'
 import { api } from '../src/lib/api'
+import dayjs from 'dayjs'
+// change the language of the dayjs library globally:
+// import ptbr from 'dayjs/locale/pt-br'
+// dayjs.locale(ptbr) // set the locale to pt-br
 
 // interface to define the memory object type
 interface Memory {
   coverUrl: string
   excerpt: string
+  createdAt: string
   id: string
 }
 
@@ -76,7 +81,10 @@ export default function NewMemory() {
               <View className="flex-row items-center gap-2">
                 <View className="h-px w-5 bg-gray-50">
                   <Text className="font-body text-xs text-gray-100">
-                    11 de Setembro, 2023
+                    {/* dayjs is a date library used to format the date that comes as a string from the api to a more readable format, in this case, DD/MM/YYYY */}
+                    {dayjs(memory.createdAt)
+                      .locale('pt-br')
+                      .format('D[ de ]MMMM[, ]YYYY')}
                   </Text>
                 </View>
               </View>
