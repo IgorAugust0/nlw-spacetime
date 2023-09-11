@@ -1,14 +1,14 @@
 // new memory page
 import { View, Text, Switch, TextInput, ScrollView, Image } from 'react-native'
-import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
-import { Link, useRouter } from 'expo-router'
-import Icon from '@expo/vector-icons/Feather'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Link, useRouter } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState } from 'react'
+import { api } from '../src/lib/api'
 import * as ImagePicker from 'expo-image-picker'
 import * as SecureStore from 'expo-secure-store'
-import { api } from '../src/lib/api'
+import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
+import Icon from '@expo/vector-icons/Feather'
 // import sharp from 'sharp' could be used to convert the image to a jpeg format and reduce the size of the image
 
 export default function NewMemory() {
@@ -158,5 +158,4 @@ export default function NewMemory() {
     </ScrollView>
   )
 }
-// 44:45
 // * union type is a type that can be one of the types specified, in this case it can be a string or null
