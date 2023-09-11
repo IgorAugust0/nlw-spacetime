@@ -1,3 +1,12 @@
+// JSX: An extension of JavaScript for writing HTML-like code within JS.
+// Commonly used with libraries like React for building UI components.
+
+// TSX: Similar to JSX, but used with TypeScript, a statically-typed superset of JS.
+// Provides type checking for enhanced code quality and error prevention.
+
+// They're commonly used with libraries like React to define the structure
+// of user interfaces in a more declarative and component-based way
+
 import './globals.css'
 import { ReactNode } from 'react'
 import {
@@ -44,7 +53,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
 
           {/* Right */}
-          <div className="flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover p-16">
+          <div className="flex max-h-screen flex-col overflow-y-scroll bg-[url(../assets/bg-stars.svg)] bg-cover">
             {children} {/* content from each page */}
           </div>
         </main>

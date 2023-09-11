@@ -14,7 +14,7 @@ module.exports = {
       // Shortcuts for pasting in from Figma:
       // Select multiple in Figma: Ctrl + Shift + Click
       // Duplicate selection: Shift + Alt + Arrow Up/Down
-      // Cursor in every line of selection: Shift + Alt + I
+      // Multiline cursor selection: Shift + Alt + I
       colors: {
         gray: {
           50: '#eaeaea',

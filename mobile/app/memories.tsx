@@ -9,7 +9,7 @@ import Icon from '@expo/vector-icons/Feather'
 import { useEffect, useState } from 'react'
 import { api } from '../src/lib/api'
 import dayjs from 'dayjs'
-// change the language of the dayjs library globally:
+// // change the language of the dayjs library globally:
 // import ptbr from 'dayjs/locale/pt-br'
 // dayjs.locale(ptbr) // set the locale to pt-br
 
