@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/IgorAugust0/NLW-Spacetime"><img src="assets/logo.svg" alt="Markdownify" width="300"></a>
+  <a href="https://github.com/IgorAugust0/NLW-Spacetime"><img src="https://raw.githubusercontent.com/IgorAugust0/IgorAugust0.github.io/ad51e6474a9396031d0daf8738f0c60ab1996de2/assets/nlw/spacetime/logo.svg" alt="Markdownify" width="300"></a>
   <br>
   NLW Spacetime - Cápsula do Tempo
 </h1>
@@ -31,7 +31,7 @@ Cápsula do Tempo é uma aplicação full-stack, do back-end ao mobile, que func
   </a>
 </p>
 
-![cover](assets/cover.png)
+![cover](https://raw.githubusercontent.com/IgorAugust0/IgorAugust0.github.io/main/assets/nlw/spacetime/cover.png)
 
 > NLW Spacetime é uma aplicação de recordação de memórias, onde o nosso usuário poderá adicionar à uma timeline textos, fotos e vídeos de acontecimentos marcantes da sua vida, organizados por mês e ano.
 
@@ -55,7 +55,8 @@ npm install
 # Configure as variáveis de ambiente
 cp .env.example .env
 
-# Preencha as variáveis no arquivo .env, deve-se criar dois conjuntos de variáveis, um ppara o web e outro para o mobile
+# Preencha as variáveis no arquivo .env, deve-se criar dois 
+# conjuntos de variáveis, um para o web e outro para o mobile
 # GITHUB_CLIENT_ID=""
 # GITHUB_CLIENT_SECRET=""
 
@@ -122,11 +123,11 @@ npx expo start
 
 ### :globe_with_meridians: Layout Desktop
 
-## ![web](assets/web.png)
+## ![web](https://raw.githubusercontent.com/IgorAugust0/IgorAugust0.github.io/main/assets/nlw/spacetime/web.png)
 
 ### :iphone: Layout Mobile
 
-![mobile](assets/mobile.png)
+![mobile](https://raw.githubusercontent.com/IgorAugust0/IgorAugust0.github.io/main/assets/nlw/spacetime/mobile.png)
 
 # :hammer_and_wrench: To-Do
 
